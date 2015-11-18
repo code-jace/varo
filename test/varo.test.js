@@ -20,7 +20,7 @@ describe('Varo', function () {
     done()
   })
 
-  it('works as expected', function (done) {
+  it('should work as expected', function (done) {
     varo.handle({role:'test'}, function (msg, done) {
       expect(msg).to.deep.equal({role:'test'})
       return done(null, true)
@@ -36,5 +36,33 @@ describe('Varo', function () {
     })
 
     done()
+
+    it('should work as expected', function (done) {
+    var testCount1 = 0
+
+    function handler (msg, done) {
+      testCount1 ++
+      return done(null, msg)
+    }
+
+    varo.handle({role: 'test2'}, handler)
+    varo.removeHandler(handler)
+    expect(testCount1).to.equal(0)
+
+    done()
   })
+
+  it('should work as expected', function (done) {
+    var testCount2 = 0
+    var observer = function (msg) {
+      testCount2 ++
+    }
+    varo.removeObserver(observer)
+    expect(testCount2).to.equal(0)
+
+    done()
+  })
+
+})
+
 })
